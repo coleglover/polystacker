@@ -184,7 +184,6 @@ class PolyStacker:
 
     def run(self):
         """Run method that performs all the real work"""
-
         # Create the dialog with elements (after translation) and keep reference
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
         if self.first_start == True:
@@ -204,8 +203,8 @@ class PolyStacker:
         result = self.dlg.exec_()
         # See if OK was pressed
 
-#~~~    def layerSelection():
         #for running in Python Console:
+        #def layerSelection():
         #canvas = qgis.utils.iface.mapCanvas()
         #layer = qgis.utils.iface.activeLayer()
             
@@ -224,25 +223,16 @@ class PolyStacker:
             return activeLayer, features, selectedIds
 
         def stackPolygon(self):
-            features = layerSelection(self)
-            #determine # of selected features
-            #count = layer.selectedFeatureCount()
-            
+            activeLayer, features, selectedIds = layerSelection(self)          
             #randomly selected an ID to snap selected (sheep) features to
             wolfFeature = random.choice(features)
-            #wolfID = wolfFeature.selectedFeatureIds()
             wolfGeom = wolfFeature.geometry()
             wolfCentre = wolfGeom.centroid()
             wolfX = wolfCentre.asPoint().x()
             wolfY = wolfCentre.asPoint().y()
-            wolfPoly = wolfGeom.asMultiPolygon
-            return wolfX, wolfY
-       
-        if result():
-            wolfX, wolfY = stackPolygon(self)
-            activeLayer, selectedIds = layerSelection(self)
-        
-            #get geometries of Ids you want to "follow" wolfFeature
+            #wolfPoly = wolfGeom.asMultiPolygon
+
+            #get geometries of Ids you want to "follow" wolfFeature  
             for sheep in selectedIds:
                 print(" -- FID: {0}".format(str(sheep)))
                 sheepFeature = activeLayer.getFeature(sheep)
@@ -250,7 +240,7 @@ class PolyStacker:
                 sheepCentre = sheepGeom.centroid()
                 sheepX = sheepCentre.asPoint().x()
                 sheepY = sheepCentre.asPoint().y()
-                sheepPoly = sheepGeom.asMultiPolygon
+                #sheepPoly = sheepGeom.asMultiPolygon
                 
             #determine distance from sheep to wolf
                 dX = (wolfX - sheepX)
@@ -262,5 +252,6 @@ class PolyStacker:
                 if (dX != 0.0 or dY != 0.0):
                     print("    tryna herd these sheep")
                     sheepGeom.translate(dX, dY)
-                    activeLayer.dataProvider().changeGeometryValues({sheep : sheepGeom})
-    
+                    activeLayer.dataProvider().changeGeometryValues({sheep : sheepGeom})     
+        if result:
+            print(stackPolygon(self))
