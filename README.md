@@ -3,7 +3,7 @@
 Thanks for checking out the polystacker. 
 
 The purpose of this add on is to take a subset of selected polygons (in my case - footprints of photographs) and snap them to a single point. This helps 
-organize your images and may reduce error down the production line if you plan on doing further analysis your groups of images. 
+organize your images and may reduce error further down the production line if you plan on doing further analysis of your image groups. 
 
 Enjoy!
 
